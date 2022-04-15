@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>ユーザー</title>
+</head>
+<body>
+	<a th:text="${title}"></a>
+	<table border="1" style="border-collapse: collapse">
+		<thead style="background: yellow">
+			<tr>
+				<td style="width: 5%">id</td>
+				<td>商品名</td>
+				<td>販売値段</td>
+				<td>値段</td>
+				<td>生産日時</td>
+				<td>産地</td>
+				<td>消除</td>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:if="${productList.size()} eq 0">
+				<td colspan="5">商品情報が存在しません。</td>
+			</tr>
+			<tr th:each="product : ${productList}">
+				<td th:text="${product.productId}"></td>
+				<td th:text="${product.productName}"></td>
+				<td th:text="${product.productPrice}"></td>
+				<td th:text="${product.productAccount}"></td>
+				<td th:text="${product.productDate}"></td>
+				<td th:text="${product.address}"></td>
+				<td><a th:href="@{/product/delete/} + ${product.productId}">消除</a></td>
+			</tr>
+		</tbody>
+	</table>
+	<!-- エクセル内容をアップロードして、DBに保存する処理 -->
+	<br>
+	<div>
+		<form method="POST" enctype="multipart/form-data"
+			action="/product/upload">
+			<table>
+				<tr>
+					<td>アップロード:</td>
+					<td><input type="file" name="file" /></td>
+				</tr>
+				<tr>
+					<td></td>
+					<td><input type="submit" value="Upload" /></td>
+				</tr>
+			</table>
+		</form>
+	</div>
+	<br>
+	<div>
+		<h4>Email転送:</h4>
+		<form method="Post" action="/product/openEmail">
+			<input type="submit" value="メール送信画面">
+		</form>
+	</div>
+</body>
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html　xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title></title>
+</head>
+<body>
+	<p>学生の情報統計<br>
+	</p>
+	<form name="form1" onsubmit="return getStudent()">
+		
+		<p th:each="student, studentStat : ${studentList}">
+			<td>学生氏名：
+			<input type="text" th:name="student_name + ${studentStat.index + 1}" th:value="${student.name}"></td>
+			<td>学生クラス：
+			<input type="text" th:name="student_class + ${studentStat.index + 1}" th:value="${student.classid}"></td>
+			<td>学生年齢：
+			<input type="text" th:name="student_age + ${studentStat.index + 1}" th:value="${student.age}"></td>
+		</p>
+		
+		<input type="submit" value="送信">
+	</form>
+	<p>学生年齢合計は：<span name="ageSum"></span></p>
+	<p>学生年齢の最大値：<span name="ageMax"></span></p>
+</body>
+<script type="text/javascript">
+	class Student{
+		constructor(name,stu_class,age) {
+			this.name = name;
+			this.stu_class = stu_class;
+			this.age = age;
+		}
+	}
+	function getStudent() {
+		var ageSum = 0;
+		var ageMax = 0;
+
+		student1 = new Student(document.form1.student_name1.value, document.form1.student_class1.value, parseInt(document.form1.student_age1.value));
+		student2 = new Student(document.form1.student_name2.value, document.form1.student_class2.value, parseInt(document.form1.student_age2.value));
+		student3 = new Student(document.form1.student_name3.value, document.form1.student_class3.value, parseInt(document.form1.student_age3.value));
+		student4 = new Student(document.form1.student_name4.value, document.form1.student_class4.value, parseInt(document.form1.student_age4.value));
+		student5 = new Student(document.form1.student_name5.value, document.form1.student_class5.value, parseInt(document.form1.student_age5.value));
+
+		
+		var stuList = [student1,student2,student3,student4,student5];
+		console.log(stuList);
+
+		ageMax = stuList[0].age;
+		for(var i = 0; i<stuList.length; i++) {
+			ageSum += stuList[0].age;
+
+			if (stuList[i].age > ageMax) {
+				ageMax = stuList[i].age;
+			}
+		}
+		console.log(ageSum,ageMax);
+
+		document.getElementsByName("ageSum")[0].innerText = ageSum;
+		document.getElementsByName("ageMax")[0].innerText = ageMax;
+		return false;
+	}
+</script>
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>買い物カご</title>
+</head>
+<body>
+	<form name="cartForm" action="/order/add" method="POST" onsubmit="return calculate()">
+	<table>
+	    <tr>
+			<td>商品名</td>
+			<td>数量</td>
+	    </tr>
+		<tr>
+			<td><select name="productname" >
+				<option value="" hidden>商品選択ください</option>
+				<option th:each="product:${product_list}"th:value="${product.productId}"th:text="${product.productName}"></option>
+				</select></td>
+			<td><select name="quantity">
+				<option value="" hidden>数量設定ください</option>
+				<option value="1">1</option>
+				<option value="2">2</option>
+				<option value="3">3</option>
+			   </select></td>	   		
+		</tr>
+		<tr>
+			<td>金額</td>
+			<td><span name="price"></span></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td align="right"><input type="submit" value="注文"></td>
+		</tr>
+	</table>	
+	</form>
+</body>
+<script>
+function calculate(){
+	var index = document.cartForm.productID.selectedIndex;
+	var price = document.cartForm.productID.options[index].getAttribute("price");
+	var quantity = document.cartForm.quantity.value;
+	document.getElementsByName('price')[0].innerText = quantity * price;
+}
+</script>
+</html>
